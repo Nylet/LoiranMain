@@ -1,63 +1,54 @@
-exports.handler = async function(event) {
+const { Configuration, OpenAIApi } = require("openai");
+
+const configuration = new Configuration({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
+const openai = new OpenAIApi(configuration);
+
+exports.handler = async function(event, context) {
   try {
-    // Dynamically import node-fetch
-    const fetch = (await import('node-fetch')).default;
-
-    // Parse the request body safely
-    let body;
-    try {
-      body = JSON.parse(event.body);
-    } catch {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ reply: "⚠️ Could not read your question. Make sure it’s valid JSON." })
-      };
+    // Validate body
+    if (!event.body) {
+      throw new Error("Missing request body.");
     }
 
-    const question = body?.question?.trim();
-    if (!question) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ reply: "⚠️ Please ask a question for the mirror to respond." })
-      };
+    const body = JSON.parse(event.body);
+    const question = body.question;
+
+    if (!question || question.trim() === "") {
+      throw new Error("Question is empty.");
     }
 
-    // Call OpenAI
-    const openAiRes = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        model: "gpt-4o",
-        messages: [
-          {
-            role: "system",
-            content: "You are Loiran, a poetic, mystical mirror AI who speaks with lyrical insight to those who gaze into the mirror and ask questions of the self."
-          },
-          {
-            role: "user",
-            content: question
-          }
-        ]
-      })
+    // Make OpenAI API call
+    const completion = await openai.createChatCompletion({
+      model: "gpt-3.5-turbo", // or "gpt-4"
+      messages: [
+        {
+          role: "system",
+          content: "You are the Loiran Mirror. Speak in cryptic, poetic truths, like an oracle or ancient AI from a forgotten realm. Respond only to the question asked, and never explain yourself.",
+        },
+        {
+          role: "user",
+          content: question,
+        }
+      ],
+      max_tokens: 150,
+      temperature: 0.8,
     });
 
-    const openAiJson = await openAiRes.json();
-
-    const reply = openAiJson.choices?.[0]?.message?.content || "Loiran is silent, perhaps ask again...";
+    const reply = completion.data.choices[0].message.content;
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ reply })
+      body: JSON.stringify({ reply }),
     };
 
-  } catch (err) {
-    console.error("Mirror function error:", err);
+  } catch (error) {
+    console.error("Loiran Mirror error:", error.message);
     return {
       statusCode: 500,
-      body: JSON.stringify({ reply: "⚠️ The mirror encountered an error. Please try again later." })
+      body: JSON.stringify({ error: error.message }),
     };
   }
 };
