@@ -1,0 +1,5 @@
+0000000000000000000000000000000000000000 e3c7df97595e748bb992cfe0acbcde1862b07bc6 Nylet <stephanista@gmail.com> 1761781672 -0700	commit (initial): Initial commit with index and style sheets
+e3c7df97595e748bb992cfe0acbcde1862b07bc6 0000000000000000000000000000000000000000 Nylet <stephanista@gmail.com> 1761781692 -0700	Branch: renamed refs/heads/master to refs/heads/main
+0000000000000000000000000000000000000000 e3c7df97595e748bb992cfe0acbcde1862b07bc6 Nylet <stephanista@gmail.com> 1761781692 -0700	Branch: renamed refs/heads/master to refs/heads/main
+e3c7df97595e748bb992cfe0acbcde1862b07bc6 0441d520dcaa6be30079ca9c89654957f66ce482 Nylet <stephanista@gmail.com> 1761783226 -0700	commit: Add placeholder pages for Shop, Myth, Luna, and Contact
+0441d520dcaa6be30079ca9c89654957f66ce482 2d7445a9d4348827ec4d026717731a65bb239b11 Nylet <stephanista@gmail.com> 1761783305 -0700	pull origin main --allow-unrelated-histories: Merge made by the 'ort' strategy.

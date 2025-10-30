@@ -1,0 +1,51 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(ellipse at top, #0e0e1c 0%, #000 100%);
+  color: #f0e9f9;
+  font-family: 'Cormorant Garamond', serif;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  text-align: center;
+  max-width: 90%;
+  padding: 1rem;
+}
+
+h1 {
+  font-family: 'Cinzel Decorative', cursive;
+  font-size: 4rem;
+  margin-bottom: 0.3rem;
+  color: #e5d1ff;
+}
+
+.tagline {
+  font-size: 1.2rem;
+  font-style: italic;
+  margin-bottom: 2rem;
+  color: #c5b8ff;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+nav ul li a {
+  color: #f0e9f9;
+  text-decoration: none;
+  font-weight: bold;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+nav ul li a:hover {
+  border-color: #f0e9f9;
+}
