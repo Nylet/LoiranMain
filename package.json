@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/Nylet/LoiranMain#readme",
   "dependencies": {
-    "node-fetch": "^3.3.2"
+    "node-fetch": "^3.3.2",
+    "openai": "^6.7.0"
   }
 }
