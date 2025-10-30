@@ -1,6 +1,6 @@
-const fetch = require("node-fetch");
-
 exports.handler = async function(event) {
+  const { default: fetch } = await import("node-fetch"); // dynamic import
+
   const body = JSON.parse(event.body);
   const question = body.question;
 
