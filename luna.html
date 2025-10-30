@@ -18,8 +18,56 @@
     }
   </style>
 </head>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.querySelector("#mirror-form");
+  const input = document.querySelector("#mirror-input");
+  const output = document.querySelector("#mirror-response");
+  const loader = document.querySelector("#mirror-loader");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const question = input.value.trim();
+    if (!question) return;
+
+    output.textContent = "";
+    loader.style.display = "block";
+
+    try {
+      const response = await fetch("/.netlify/functions/loiran-mirror", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ question })
+      });
+
+      const data = await response.json();
+      loader.style.display = "none";
+      output.textContent = data.reply;
+    } catch (error) {
+      loader.style.display = "none";
+      output.textContent = "⚠️ The mirror is quiet... something went wrong.";
+      console.error("Mirror error:", error);
+    }
+  });
+});
+</script>
 <body>
-  <h1>Luna's space awaits 🌌</h1>
+  <h1><!-- Loiran Mirror Interface -->
+<section class="mirror-section">
+  <form id="mirror-form">
+    <label for="mirror-input">Ask the mirror your question:</label><br>
+    <input type="text" id="mirror-input" placeholder="What do you seek?" />
+    <button type="submit">Reflect</button>
+  </form>
+  <div id="mirror-loader" style="display:none;">✨ Reflecting... ✨</div>
+  <div id="mirror-response" class="mirror-output"></div>
+</section>
+
+<!-- Link the JavaScript (external) -->
+<script src="/js/loiranMirror.js"></script>
+</h1>
 </body>
 </html>
 
